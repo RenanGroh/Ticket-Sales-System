@@ -1,4 +1,4 @@
-Get http://localhost:3000/events
+GET http://localhost:3000/events
 
 ###
 # @name createEvent
@@ -17,10 +17,10 @@ Content-Type: application/json
 @eventId = {{ createEvent.response.body.id }}
 
 ###
-Get http://localhost:3000/events/{{eventId}}
+GET http://localhost:3000/events/{{ eventId }}
 
 ###
-PATCH http://localhost:3000/events/{{eventId}}
+PATCH http://localhost:3000/events/{{ eventId }}
 Content-Type: application/json
 
 {
@@ -31,17 +31,29 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/events/{{eventId}}
+DELETE http://localhost:3000/events/{{ eventId }}
 
 ###
 GET http://localhost:3000/events/{{eventId}}/spots
 
 ###
 # @name createSpot
-
 POST http://localhost:3000/events/{{eventId}}/spots
 Content-Type: application/json
 
 {
-    "name": "A1"
+  "name": "A3"
+}
+
+###
+@spotName = {{ createSpot.response.body.name }}
+
+###
+POST http://localhost:3000/events/{{eventId}}/reserve
+Content-Type: application/json
+
+{
+  "spots": ["{{ spotName }}"],
+  "ticket_kind": "full",
+  "email": "test@test.com"
 }
